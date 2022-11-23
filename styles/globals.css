@@ -14,13 +14,32 @@ a {
 * {
   box-sizing: border-box;
 }
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+.news,
+.chip {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+  padding: 0 2%;
+  margin-top: 2%;
+}
+.news .card {
+  padding: 2vh 0;
+}
+.loading {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.MuiTypography-h5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.MuiTypography-body2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
