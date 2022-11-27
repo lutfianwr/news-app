@@ -12,6 +12,7 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [country, setCountry] = useState("us");
   const [category, setCategory] = useState("general");
+  const [offset, useOffset] = useState(0);
 
   const data = [
     { code: "br", label: "brazil" },
@@ -38,9 +39,13 @@ export default function Home() {
 
   const fetchData = async () => {
     const res = await fetch(
-      `https://newsapi.org/v2/top-headlines?pageSize=21&country=${country}&category=${category}&apiKey=${process.env.NEXT_PUBLIC_MY_API_KEY}`
+      `https://api.spaceflightnewsapi.net/v3/articles?` +
+        new URLSearchParams({
+          _limit: 15,
+          _start: offset,
+        })
     );
-    const { articles } = await res.json();
+    const articles = await res.json();
     setArticles(articles);
   };
 
@@ -52,16 +57,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Stack className="chip" direction="row" spacing={1}>
+      {/* <Stack className="chip" direction="row" spacing={1}>
         {data.map((dat, index) => {
           return (
             <Chip
               key={index}
               label={dat.label}
               variant="outlined"
-              onClick={() => {
-                setCountry(dat.code), console.log(country);
-              }}
+              onClick={() => setCountry(dat.code)}
             />
           );
         })}
@@ -79,7 +82,7 @@ export default function Home() {
             />
           );
         })}
-      </Stack>
+      </Stack> */}
 
       <div className="news">
         {articles.length > 0 &&
@@ -87,11 +90,10 @@ export default function Home() {
             return (
               <div className="card" key={article.url}>
                 <Card
-                  author={article.author}
                   title={article.title}
-                  imageUrl={article.urlToImage}
+                  imageUrl={article.imageUrl}
                   url={article.url}
-                  description={article.description}
+                  description={article.summary}
                   date={article.publishedAt}
                 />
               </div>

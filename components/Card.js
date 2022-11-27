@@ -5,13 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-export default function ActionAreaCard({
-  author,
-  title,
-  imageUrl,
-  url,
-  description,
-}) {
+export default function ActionAreaCard({ title, imageUrl, url, description }) {
   const redirectTourl = (url) => {
     window.open(url, "_blank");
   };
