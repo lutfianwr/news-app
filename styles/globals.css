@@ -1,11 +1,16 @@
 html,
 body {
+  display: flex;
+  justify-content: center;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-
+.container {
+  max-width: 30em;
+  background-color: aliceblue;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -23,8 +28,11 @@ a {
   padding: 0 2%;
   margin-top: 2%;
 }
+#category {
+  margin-bottom: 2%;
+}
 .news .card {
-  padding: 2vh 0;
+  margin-bottom: 2vh;
 }
 .loading {
   height: 100vh;
