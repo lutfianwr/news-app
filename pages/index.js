@@ -52,6 +52,7 @@ export default function Home() {
         <title>Mak News</title>
         <meta name="News application" content="Mobile news application" />
         <link rel="icon" href="/favicon.png" />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <Header />
 
