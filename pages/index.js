@@ -1,5 +1,6 @@
 import Card from "../components/Card";
 import Loading from "../components/Loading";
+import BottomNav from "../components/BottomNav";
 import Header from "../components/Header";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -90,6 +91,8 @@ export default function Home() {
 
         {loading && <Loading />}
       </div>
+
+      <BottomNav />
     </div>
   );
 }
