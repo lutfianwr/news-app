@@ -1,14 +1,15 @@
 import Card from "../components/Card";
 import Loading from "../components/Loading";
-import BottomNav from "../components/BottomNav";
-import Header from "../components/Header";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import Layout from "../components/Layout";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const [articles, setArticles] = useState([]);
   const [category, setCategory] = useState("all");
   const [loading, setLoading] = useState(false);
@@ -37,9 +38,8 @@ export default function Home() {
         new URLSearchParams({
           category: category,
         })
-    ).catch((error) => {
-      console.log(error);
-    });
+    );
+    res.status != 200 && router.push("/error");
     const { data } = await res.json();
     const sliced = data.slice(0, 9);
     setArticles(sliced);
@@ -47,14 +47,13 @@ export default function Home() {
   };
 
   return (
-    <div className="container">
+    <Layout>
       <Head>
         <title>Mak News</title>
         <meta name="News application" content="Mobile news application" />
         <link rel="icon" href="/favicon.png" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <Header />
 
       <Stack className="chip" direction="row" spacing={1}>
         {kategori.map((data, index) => {
@@ -92,8 +91,6 @@ export default function Home() {
 
         {loading && <Loading />}
       </div>
-
-      <BottomNav />
-    </div>
+    </Layout>
   );
 }

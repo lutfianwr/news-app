@@ -9,7 +9,13 @@ body {
 }
 .container {
   max-width: 30em;
-  background-color: aliceblue;
+  min-height: 100vh;
+}
+.content {
+  display: flex;
+  align-items: center;
+  min-height: 90vh;
+  width: 100vw;
 }
 a {
   color: inherit;
@@ -35,7 +41,7 @@ a {
   margin-bottom: 2vh;
 }
 .loading {
-  height: 100vh;
+  height: 70vh;
   display: flex;
   align-items: center;
 }
