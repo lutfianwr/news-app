@@ -108,10 +108,9 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
+@media (min-width: 600px) {
+  #header {
+    width: 100vw;
   }
 }
 

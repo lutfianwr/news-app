@@ -34,6 +34,9 @@ a {
   padding: 0 2%;
   margin-top: 2%;
 }
+.news {
+  margin-bottom: 10%;
+}
 #category {
   margin-bottom: 2%;
 }
@@ -56,4 +59,20 @@ a {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.swiper-slide {
+  flex-shrink: 100 !important;
+  width: 150px !important;
+  /* padding-right: 2vw; */
+}
+.swiper {
+  padding: 2vh 2vw !important;
+  max-width: 90vw;
+
+  margin: 0 5vw;
+}
+@media (max-width: 600px) {
+  #header {
+    width: 100vw;
+  }
 }

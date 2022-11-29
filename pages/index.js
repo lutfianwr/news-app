@@ -1,5 +1,6 @@
 import Card from "../components/Card";
 import Loading from "../components/Loading";
+import Swip from "../components/Swip";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Head from "next/head";
@@ -7,6 +8,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function Home() {
   const router = useRouter();
@@ -55,22 +57,23 @@ export default function Home() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
 
-      <Stack className="chip" direction="row" spacing={1}>
+      <Swiper spaceBetween={4} slidesPerView="auto">
         {kategori.map((data, index) => {
           return (
-            <Chip
-              id="category"
-              color="primary"
-              key={index}
-              label={data.code}
-              variant={data.code != category ? `outlined` : ""}
-              onClick={() => {
-                setCategory(data.code);
-              }}
-            />
+            <SwiperSlide key={index}>
+              <Chip
+                id="category"
+                color="primary"
+                label={data.code}
+                variant={data.code != category ? `outlined` : ""}
+                onClick={() => {
+                  setCategory(data.code);
+                }}
+              />
+            </SwiperSlide>
           );
         })}
-      </Stack>
+      </Swiper>
 
       <div className="news">
         {!loading &&
