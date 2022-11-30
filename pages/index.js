@@ -1,14 +1,13 @@
 import Card from "../components/Card";
 import Loading from "../components/Loading";
-import Swip from "../components/Swip";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 export default function Home() {
   const router = useRouter();
@@ -30,36 +29,23 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    getNews();
+    fetchData();
   }, [category]);
 
-  async function getNews() {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `https://inshorts.deta.dev/news?` +
-          new URLSearchParams({
-            category: category,
-          }),
-        {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-      const { data } = await response.json();
-      const topnews = data.slice(0, 9);
-      setArticles(topnews);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-      router.push("/error");
-    }
-  }
+  const fetchData = async () => {
+    setLoading(true);
+    const res = await fetch(
+      `https://inshorts.deta.dev/news?` +
+        new URLSearchParams({
+          category: category,
+        })
+    );
+    res.status != 200 && router.push("/error");
+    const { data } = await res.json();
+    const sliced = data.slice(0, 9);
+    setArticles(sliced);
+    setLoading(false);
+  };
 
   return (
     <Layout>
