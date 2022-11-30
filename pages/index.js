@@ -30,23 +30,36 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    fetchData();
+    getNews();
   }, [category]);
 
-  const fetchData = async () => {
-    setLoading(true);
-    const res = await fetch(
-      `https://inshorts.deta.dev/news?` +
-        new URLSearchParams({
-          category: category,
-        })
-    );
-    res.status != 200 && router.push("/error");
-    const { data } = await res.json();
-    const sliced = data.slice(0, 9);
-    setArticles(sliced);
-    setLoading(false);
-  };
+  async function getNews() {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://inshorts.deta.dev/news?` +
+          new URLSearchParams({
+            category: category,
+          }),
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      const { data } = await response.json();
+      const topnews = data.slice(0, 9);
+      setArticles(topnews);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      router.push("/error");
+    }
+  }
 
   return (
     <Layout>
