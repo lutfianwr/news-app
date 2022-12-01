@@ -16,36 +16,51 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const kategori = [
-    { code: "all" },
-    { code: "business" },
-    { code: "entertainment" },
-    { code: "automobile" },
-    { code: "science" },
-    { code: "sports" },
-    { code: "technology" },
-    { code: "politics" },
-    { code: "startup" },
-    { code: "world" },
+    { id: 1, code: "all" },
+    { id: 2, code: "business" },
+    { id: 3, code: "entertainment" },
+    { id: 4, code: "automobile" },
+    { id: 5, code: "science" },
+    { id: 6, code: "sports" },
+    { id: 7, code: "technology" },
+    { id: 8, code: "miscellaneous" },
+    { id: 9, code: "Health___Fitness" },
+    { id: 10, code: "politics" },
+    { id: 11, code: "Coronavirus" },
+    { id: 12, code: "startup" },
+    { id: 13, code: "world" },
+    { id: 14, code: "travel" },
+    { id: 15, code: "fashion" },
+    { id: 16, code: "education" },
   ];
 
   useEffect(() => {
-    fetchData();
+    getNews();
   }, [category]);
 
-  const fetchData = async () => {
-    setLoading(true);
-    const res = await fetch(
-      `https://inshorts.deta.dev/news?` +
-        new URLSearchParams({
-          category: category,
-        })
-    );
-    res.status != 200 && router.push("/error");
-    const { data } = await res.json();
-    const sliced = data.slice(0, 9);
-    setArticles(sliced);
-    setLoading(false);
-  };
+  async function getNews() {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://inshorts.me/news/topics/${category}?offset=0&limit=5`,
+        {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      const { data } = await response.json();
+      setArticles(data.articles);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      router.push("/error");
+    }
+  }
 
   return (
     <Layout>
@@ -57,9 +72,9 @@ export default function Home() {
       </Head>
 
       <Swiper spaceBetween={4} slidesPerView="auto">
-        {kategori.map((data, index) => {
+        {kategori.map((data) => {
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={data.id}>
               <Chip
                 id="category"
                 color="primary"
@@ -82,7 +97,7 @@ export default function Home() {
                 <Card
                   title={article.title}
                   imageUrl={article.imageUrl}
-                  url={article.readMoreUrl}
+                  url={article.sourceUrl}
                   description={article.content}
                   date={article.date}
                   time={article.time}
