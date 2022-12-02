@@ -1,4 +1,5 @@
 import Card from "../components/Card";
+import CardSmall from "../components/CardSmall";
 import Loading from "../components/Loading";
 import Chip from "@mui/material/Chip";
 import Head from "next/head";
@@ -8,10 +9,17 @@ import Layout from "../components/Layout";
 import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import { Typography } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();
   const [articles, setArticles] = useState([]);
+  const [headline, setHeadline] = useState([]);
   const [category, setCategory] = useState("all");
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +50,7 @@ export default function Home() {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://inshorts.me/news/topics/${category}?offset=0&limit=5`,
+        `https://inshorts.me/news/topics/${category}?offset=0&limit=10`,
         {
           method: "GET",
           headers: {
@@ -54,8 +62,11 @@ export default function Home() {
         throw new Error(`Error! status: ${response.status}`);
       }
       const { data } = await response.json();
+      const headlines = data.articles.slice(2, 6);
       setArticles(data.articles);
+      setHeadline(headlines);
       setLoading(false);
+      console.log(headlines);
     } catch (err) {
       console.log(err);
       router.push("/error");
@@ -71,7 +82,7 @@ export default function Home() {
         <link rel="manifest" href="/manifest.json" />
       </Head>
 
-      <Swiper spaceBetween={4} slidesPerView="auto">
+      <Swiper spaceBetween={4} slidesPerView="auto" id="category">
         {kategori.map((data) => {
           return (
             <SwiperSlide key={data.id}>
@@ -89,22 +100,69 @@ export default function Home() {
         })}
       </Swiper>
 
+      <Typography
+        variant="h7"
+        noWrap
+        component="div"
+        sx={{ marginBottom: 1, padding: "0 5vw" }}
+      >
+        Top News
+      </Typography>
+
       <div className="news">
-        {!loading &&
-          articles.map((article) => {
-            return (
-              <div className="card" key={article.url}>
-                <Card
-                  title={article.title}
-                  imageUrl={article.imageUrl}
-                  url={article.sourceUrl}
-                  description={article.content}
-                  date={article.date}
-                  time={article.time}
-                />
-              </div>
-            );
-          })}
+        <Swiper
+          modules={[Pagination, A11y]}
+          spaceBetween={50}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+        >
+          {!loading &&
+            headline.map((article) => {
+              return (
+                <SwiperSlide key={article.url}>
+                  <div className="card">
+                    <Card
+                      title={article.title}
+                      imageUrl={article.imageUrl}
+                      url={article.sourceUrl}
+                      description={article.content}
+                      date={article.date}
+                      time={article.time}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+
+        <div id="trending">
+          <Typography
+            variant="h7"
+            noWrap
+            component="div"
+            sx={{ marginBottom: 1 }}
+          >
+            Trending
+          </Typography>
+
+          {!loading &&
+            articles.map((article) => {
+              return (
+                <div className="card" key={article.url}>
+                  <CardSmall
+                    title={article.title}
+                    imageUrl={article.imageUrl}
+                    url={article.sourceUrl}
+                    description={article.content}
+                    date={article.date}
+                    time={article.time}
+                  />
+                </div>
+              );
+            })}
+        </div>
 
         {loading && <Loading />}
       </div>

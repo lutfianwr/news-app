@@ -31,17 +31,19 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 2%;
-  padding: 0 2%;
-  margin-top: 2%;
 }
-.news {
-  margin-bottom: 10%;
+.MuiCardMedia-img {
+  aspect-ratio: 1/1 !important;
 }
-#category {
-  margin-bottom: 2%;
+#trending {
+  width: 100vw;
+  padding: 0 5vw;
 }
 .news .card {
   margin-bottom: 2vh;
+}
+.MuiCard-root {
+  box-shadow: none;
 }
 .loading {
   height: 70vh;
@@ -60,25 +62,21 @@ a {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.swiper-slide {
+#category .swiper-slide {
   flex-shrink: 100 !important;
   width: 150px !important;
 }
+.news .swiper {
+  padding-top: 0 !important;
+}
 .swiper {
-  padding: 2vh 2vw !important;
+  padding: 2vh 0vw !important;
   max-width: 90vw;
-
   margin: 0 5vw;
 }
 
 /* header */
 
-.MuiInputBase-input {
-  width: 0ch !important;
-}
-.MuiInputBase-input:focus {
-  width: 20ch !important;
-}
 .css-1orzy9s {
   width: auto;
   background-color: rgba(255, 255, 255, 0);

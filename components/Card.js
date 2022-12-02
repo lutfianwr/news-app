@@ -10,7 +10,7 @@ export default function ActionAreaCard({ title, imageUrl, url, description }) {
     window.open(url, "_blank");
   };
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={() => redirectTourl(url)}>
+    <Card onClick={() => redirectTourl(url)}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -18,8 +18,8 @@ export default function ActionAreaCard({ title, imageUrl, url, description }) {
           image={imageUrl}
           alt={imageUrl || "No image"}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+        <CardContent sx={{ padding: "8px 0" }}>
+          <Typography gutterBottom variant="h6" component="div">
             {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
