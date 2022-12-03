@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import HouseIcon from "@mui/icons-material/House";
+import SearchIcon from "@mui/icons-material/Search";
 import TurnedInIcon from "@mui/icons-material/TurnedIn";
 import PersonIcon from "@mui/icons-material/Person";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
@@ -49,6 +50,7 @@ export default function SimpleBottomNavigation(props) {
         >
           <BottomNavigationAction href="." icon={<HouseIcon />} />
           <BottomNavigationAction icon={<TurnedInIcon />} />
+          <BottomNavigationAction icon={<SearchIcon />} />
           <BottomNavigationAction icon={<PersonIcon />} />
         </BottomNavigation>
       </HideOnScroll>

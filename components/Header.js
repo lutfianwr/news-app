@@ -75,6 +75,7 @@ export default function SearchAppBar() {
             Mak News
           </Typography>
           <Search
+            onMouseLeave={() => console.log("leave")}
             sx={{ width: "auto", backgroundColor: "rgba(255, 255, 255, 0)" }}
           >
             <SearchIconWrapper>

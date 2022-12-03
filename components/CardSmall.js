@@ -4,11 +4,15 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
+import { styled } from "@mui/material/styles";
+
+const CardContentNoPadding = styled(CardContent)(`
+  padding: 0;
+  &:last-child {
+    padding-bottom: 0;
+  }
+`);
 
 export default function MediaControlCard({
   title,
@@ -17,16 +21,32 @@ export default function MediaControlCard({
   description,
   author,
   source,
+  date,
 }) {
-  const theme = useTheme();
+  const redirectTourl = (url) => {
+    window.open(url, "_blank");
+  };
+
+  const getHours = () => {
+    const nowDate = Date.now();
+    const hour = (nowDate - date) / (1000 * 60 * 60);
+    if (hour < 24) {
+      return Math.ceil(hour) + " hours ago";
+    } else {
+      return Math.ceil(hour / 24) + " days ago";
+    }
+  };
 
   return (
-    <Card sx={{ display: "flex", justifyContent: "space-between" }}>
+    <Card
+      sx={{ display: "flex", justifyContent: "space-between" }}
+      onClick={() => redirectTourl(url)}
+    >
       <CardMedia
         component="img"
         sx={{ width: 100, height: "auto", borderRadius: "10px" }}
         image={imageUrl}
-        alt="Live from space album cover"
+        alt={title}
       />
       <Box
         sx={{
@@ -34,9 +54,8 @@ export default function MediaControlCard({
           flexDirection: "column",
         }}
       >
-        <CardContent
+        <CardContentNoPadding
           sx={{
-            // flex: "1 0 auto",
             minHeight: 100,
             display: "flex",
             flexDirection: "column",
@@ -47,14 +66,19 @@ export default function MediaControlCard({
           <Typography component="div" variant="h6">
             {title}
           </Typography>
-          <Typography
-            variant="subtitle2"
-            color="text.secondary"
-            component="div"
-          >
-            {source}
-          </Typography>
-        </CardContent>
+          <div>
+            <Typography variant="body2" color="primary.main" component="div">
+              {source}
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              component="div"
+            >
+              {getHours()}
+            </Typography>
+          </div>
+        </CardContentNoPadding>
       </Box>
     </Card>
   );

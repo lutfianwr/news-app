@@ -5,10 +5,28 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-export default function ActionAreaCard({ title, imageUrl, url, description }) {
+export default function ActionAreaCard({
+  title,
+  imageUrl,
+  url,
+  description,
+  subtitle,
+  source,
+  date,
+}) {
   const redirectTourl = (url) => {
     window.open(url, "_blank");
   };
+  const getHours = () => {
+    const nowDate = Date.now();
+    const hour = (nowDate - date) / (1000 * 60 * 60);
+    if (hour < 24) {
+      return Math.ceil(hour) + " hours ago";
+    } else {
+      return Math.ceil(hour / 24) + " days ago";
+    }
+  };
+
   return (
     <Card onClick={() => redirectTourl(url)}>
       <CardActionArea>
@@ -23,8 +41,11 @@ export default function ActionAreaCard({ title, imageUrl, url, description }) {
           <Typography gutterBottom variant="h6" component="div">
             {title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description || title}
+          <Typography variant="body2" color="primary.main">
+            {source || subtitle}
+          </Typography>
+          <Typography variant="subtitle2" color="text.secondary">
+            {getHours()}
           </Typography>
         </CardContent>
       </CardActionArea>

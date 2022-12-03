@@ -22,25 +22,26 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [headline, setHeadline] = useState([]);
   const [category, setCategory] = useState("all");
+  const [label, setLabel] = useState("All");
   const [loading, setLoading] = useState(false);
 
   const kategori = [
-    { id: 1, code: "all" },
-    { id: 2, code: "business" },
-    { id: 3, code: "entertainment" },
-    { id: 4, code: "automobile" },
-    { id: 5, code: "science" },
-    { id: 6, code: "sports" },
-    { id: 7, code: "technology" },
-    { id: 8, code: "miscellaneous" },
-    { id: 9, code: "Health___Fitness" },
-    { id: 10, code: "politics" },
-    { id: 11, code: "Coronavirus" },
-    { id: 12, code: "startup" },
-    { id: 13, code: "world" },
-    { id: 14, code: "travel" },
-    { id: 15, code: "fashion" },
-    { id: 16, code: "education" },
+    { id: 1, code: "all", label: "All" },
+    { id: 2, code: "business", label: "Business" },
+    { id: 3, code: "entertainment", label: "Entertainment" },
+    { id: 4, code: "automobile", label: "Automobile" },
+    { id: 5, code: "science", label: "Science" },
+    { id: 6, code: "sports", label: "Sports" },
+    { id: 7, code: "technology", label: "Technology" },
+    { id: 8, code: "miscellaneous", label: "Miscellaneous" },
+    { id: 9, code: "Health___Fitness", label: "Health & Fitness" },
+    { id: 10, code: "politics", label: "Politics" },
+    { id: 11, code: "Coronavirus", label: "Coronavirus" },
+    { id: 12, code: "startup", label: "Startup" },
+    { id: 13, code: "world", label: "World" },
+    { id: 14, code: "travel", label: "Travel" },
+    { id: 15, code: "fashion", label: "Fashion" },
+    { id: 16, code: "education", label: "Education" },
   ];
 
   useEffect(() => {
@@ -67,7 +68,6 @@ export default function Home() {
       setArticles(data.articles);
       setHeadline(headlines);
       setLoading(false);
-      console.log(headlines);
     } catch (err) {
       console.log(err);
       router.push("/error");
@@ -91,10 +91,10 @@ export default function Home() {
                 sx={{ borderRadius: "10px" }}
                 id="category"
                 color="primary"
-                label={data.code}
+                label={data.label}
                 variant={data.code != category ? `outlined` : ""}
                 onClick={() => {
-                  setCategory(data.code);
+                  setCategory(data.code), setLabel(data.label);
                 }}
               />
             </SwiperSlide>
@@ -119,8 +119,6 @@ export default function Home() {
               spaceBetween={50}
               slidesPerView={1}
               pagination={{ clickable: true }}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log("slide change")}
             >
               {headline.map((article) => {
                 return (
@@ -131,8 +129,10 @@ export default function Home() {
                         imageUrl={article.imageUrl}
                         url={article.sourceUrl}
                         description={article.content}
-                        date={article.date}
                         time={article.time}
+                        source={article.sourceName}
+                        subtitle={article.subtitle}
+                        date={article.createdAt}
                       />
                     </div>
                   </SwiperSlide>
@@ -154,7 +154,7 @@ export default function Home() {
                 textTransform: "capitalize",
               }}
             >
-              {category === "all" ? "trending" : category}
+              {category === "all" ? "trending" : label}
             </Typography>
 
             {articles.map((article) => {
@@ -165,10 +165,10 @@ export default function Home() {
                     imageUrl={article.imageUrl}
                     url={article.sourceUrl}
                     description={article.content}
-                    date={article.date}
                     time={article.time}
                     author={article.authorName}
                     source={article.sourceName}
+                    date={article.createdAt}
                   />
                 </div>
               );
