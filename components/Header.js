@@ -50,7 +50,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   return (
-    <Box sx={{ flexGrow: 1 }} id="header">
+    <Box
+      sx={{
+        flexGrow: 1,
+      }}
+      id="header"
+    >
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -65,11 +70,13 @@ export default function SearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1, display: "block" }}
           >
             Mak News
           </Typography>
-          <Search>
+          <Search
+            sx={{ width: "auto", backgroundColor: "rgba(255, 255, 255, 0)" }}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

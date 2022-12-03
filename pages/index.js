@@ -15,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Typography } from "@mui/material";
+import { Container } from "@mui/system";
 
 export default function Home() {
   const router = useRouter();
@@ -87,6 +88,7 @@ export default function Home() {
           return (
             <SwiperSlide key={data.id}>
               <Chip
+                sx={{ borderRadius: "10px" }}
                 id="category"
                 color="primary"
                 label={data.code}
@@ -100,55 +102,62 @@ export default function Home() {
         })}
       </Swiper>
 
-      <Typography
-        variant="h7"
-        noWrap
-        component="div"
-        sx={{ marginBottom: 1, padding: "0 5vw" }}
-      >
-        Top News
-      </Typography>
+      <Container className="news">
+        {!loading && category === "all" && (
+          <div className="top-news">
+            <Typography
+              variant="h7"
+              noWrap
+              component="div"
+              sx={{ marginBottom: 1, fontWeight: "bold" }}
+            >
+              Top News
+            </Typography>
 
-      <div className="news">
-        <Swiper
-          modules={[Pagination, A11y]}
-          spaceBetween={50}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
-        >
-          {!loading &&
-            headline.map((article) => {
-              return (
-                <SwiperSlide key={article.url}>
-                  <div className="card">
-                    <Card
-                      title={article.title}
-                      imageUrl={article.imageUrl}
-                      url={article.sourceUrl}
-                      description={article.content}
-                      date={article.date}
-                      time={article.time}
-                    />
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-        </Swiper>
+            <Swiper
+              modules={[Pagination, A11y]}
+              spaceBetween={50}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log("slide change")}
+            >
+              {headline.map((article) => {
+                return (
+                  <SwiperSlide key={article.url}>
+                    <div className="card">
+                      <Card
+                        title={article.title}
+                        imageUrl={article.imageUrl}
+                        url={article.sourceUrl}
+                        description={article.content}
+                        date={article.date}
+                        time={article.time}
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+        )}
 
-        <div id="trending">
-          <Typography
-            variant="h7"
-            noWrap
-            component="div"
-            sx={{ marginBottom: 1 }}
-          >
-            Trending
-          </Typography>
+        {!loading && (
+          <div id="trending">
+            <Typography
+              variant="h7"
+              noWrap
+              component="div"
+              sx={{
+                marginBottom: 1,
+                fontWeight: "bold",
+                textTransform: "capitalize",
+              }}
+            >
+              {category === "all" ? "trending" : category}
+            </Typography>
 
-          {!loading &&
-            articles.map((article) => {
+            {articles.map((article) => {
               return (
                 <div className="card" key={article.url}>
                   <CardSmall
@@ -158,14 +167,17 @@ export default function Home() {
                     description={article.content}
                     date={article.date}
                     time={article.time}
+                    author={article.authorName}
+                    source={article.sourceName}
                   />
                 </div>
               );
             })}
-        </div>
+          </div>
+        )}
 
         {loading && <Loading />}
-      </div>
+      </Container>
     </Layout>
   );
 }

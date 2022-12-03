@@ -13,6 +13,7 @@ export default function ActionAreaCard({ title, imageUrl, url, description }) {
     <Card onClick={() => redirectTourl(url)}>
       <CardActionArea>
         <CardMedia
+          sx={{ borderRadius: "10px" }}
           component="img"
           height="140"
           image={imageUrl}
