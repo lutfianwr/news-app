@@ -70,9 +70,47 @@ export default function Home() {
       setLoading(false);
     } catch (err) {
       console.log(err);
-      router.push("/error");
+      router.push("/404");
     }
   }
+
+  const isBookmark = (item) => {
+    const temp = localStorage.getItem("bookmark");
+    if (temp && temp.length > 99) {
+      const tempData = JSON.parse(temp);
+      const find = tempData.find((data) => data.hashId === item.hashId);
+      if (find) return find.hashId;
+    }
+  };
+
+  const handleBookmark = (item) => {
+    setLoading(true);
+    const temp = localStorage.getItem("bookmark");
+    if (temp || temp != null) {
+      const tempData = JSON.parse(temp);
+      const find = tempData.find((data) => data.hashId === item.hashId);
+      if (find) {
+        handleRemove(item);
+        return;
+      }
+    }
+    if (temp) {
+      const tempData = JSON.parse(temp);
+      tempData.push(item);
+      localStorage.setItem("bookmark", JSON.stringify(tempData));
+    } else {
+      localStorage.setItem("bookmark", JSON.stringify([item]));
+    }
+    setTimeout(() => setLoading(false), 100);
+  };
+
+  const handleRemove = (item) => {
+    const temp = localStorage.getItem("bookmark");
+    const tempData = JSON.parse(temp);
+    const tempFilter = tempData.filter((data) => data.hashId !== item.hashId);
+    localStorage.setItem("bookmark", JSON.stringify(tempFilter));
+    setTimeout(() => setLoading(false), 100);
+  };
 
   return (
     <Layout>
@@ -133,6 +171,9 @@ export default function Home() {
                         source={article.sourceName}
                         subtitle={article.subtitle}
                         date={article.createdAt}
+                        id={article.hashId}
+                        onClickBookmark={() => handleBookmark(article)}
+                        isBookmark={() => isBookmark(article)}
                       />
                     </div>
                   </SwiperSlide>
@@ -169,6 +210,9 @@ export default function Home() {
                     author={article.authorName}
                     source={article.sourceName}
                     date={article.createdAt}
+                    id={article.hashId}
+                    onClickBookmark={() => handleBookmark(article)}
+                    isBookmark={() => isBookmark(article)}
                   />
                 </div>
               );

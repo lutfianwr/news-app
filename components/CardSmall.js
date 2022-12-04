@@ -6,6 +6,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
+import { Container } from "@mui/system";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { SvgIcon } from "@mui/material";
 
 const CardContentNoPadding = styled(CardContent)(`
   padding: 0;
@@ -21,7 +25,10 @@ export default function MediaControlCard({
   description,
   author,
   source,
+  id,
   date,
+  onClickBookmark,
+  isBookmark,
 }) {
   const redirectTourl = (url) => {
     window.open(url, "_blank");
@@ -38,10 +45,7 @@ export default function MediaControlCard({
   };
 
   return (
-    <Card
-      sx={{ display: "flex", justifyContent: "space-between" }}
-      onClick={() => redirectTourl(url)}
-    >
+    <Card sx={{ display: "flex", justifyContent: "space-between" }}>
       <CardMedia
         component="img"
         sx={{ width: 100, height: "auto", borderRadius: "10px" }}
@@ -63,21 +67,40 @@ export default function MediaControlCard({
             justifyContent: "space-between",
           }}
         >
-          <Typography component="div" variant="h6">
+          <Typography
+            component="div"
+            variant="h6"
+            onClick={() => redirectTourl(url)}
+          >
             {title}
           </Typography>
-          <div>
-            <Typography variant="body2" color="primary.main" component="div">
-              {source}
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              color="text.secondary"
-              component="div"
-            >
-              {getHours()}
-            </Typography>
-          </div>
+          <Container
+            sx={{
+              padding: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <Typography variant="body2" color="primary.main" component="div">
+                {source}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                component="div"
+              >
+                {getHours()}
+              </Typography>
+            </div>
+            <SvgIcon
+              onClick={() => onClickBookmark(id)}
+              component={
+                isBookmark() === id ? BookmarkIcon : BookmarkBorderIcon
+              }
+            />
+          </Container>
         </CardContentNoPadding>
       </Box>
     </Card>

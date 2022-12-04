@@ -9,6 +9,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import PropTypes from "prop-types";
 import Slide from "@mui/material/Slide";
+import { useRouter } from "next/router";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -37,6 +38,7 @@ HideOnScroll.propTypes = {
 
 export default function SimpleBottomNavigation(props) {
   const [value, setValue] = React.useState(0);
+  const router = useRouter();
 
   return (
     <Box sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
@@ -49,9 +51,15 @@ export default function SimpleBottomNavigation(props) {
           }}
         >
           <BottomNavigationAction href="." icon={<HouseIcon />} />
-          <BottomNavigationAction icon={<TurnedInIcon />} />
+          <BottomNavigationAction
+            icon={<TurnedInIcon />}
+            onClick={() => router.push("/bookmark")}
+          />
           <BottomNavigationAction icon={<SearchIcon />} />
-          <BottomNavigationAction icon={<PersonIcon />} />
+          <BottomNavigationAction
+            icon={<PersonIcon />}
+            onClick={() => router.push("/profile")}
+          />
         </BottomNavigation>
       </HideOnScroll>
     </Box>

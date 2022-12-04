@@ -3,16 +3,22 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Container } from "@mui/material";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { SvgIcon } from "@mui/material";
 
 export default function ActionAreaCard({
   title,
   imageUrl,
   url,
+  id,
   description,
   subtitle,
   source,
   date,
+  onClickBookmark,
+  isBookmark,
 }) {
   const redirectTourl = (url) => {
     window.open(url, "_blank");
@@ -28,7 +34,7 @@ export default function ActionAreaCard({
   };
 
   return (
-    <Card onClick={() => redirectTourl(url)}>
+    <Card>
       <CardActionArea>
         <CardMedia
           sx={{ borderRadius: "10px" }}
@@ -38,15 +44,37 @@ export default function ActionAreaCard({
           alt={imageUrl || "No image"}
         />
         <CardContent sx={{ padding: "8px 0" }}>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            onClick={() => redirectTourl(url)}
+          >
             {title}
           </Typography>
-          <Typography variant="body2" color="primary.main">
-            {source || subtitle}
-          </Typography>
-          <Typography variant="subtitle2" color="text.secondary">
-            {getHours()}
-          </Typography>
+          <Container
+            sx={{
+              padding: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              <Typography variant="body2" color="primary.main">
+                {source || subtitle}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {getHours()}
+              </Typography>
+            </div>
+            <SvgIcon
+              onClick={() => onClickBookmark(id)}
+              component={
+                isBookmark() === id ? BookmarkIcon : BookmarkBorderIcon
+              }
+            />
+          </Container>
         </CardContent>
       </CardActionArea>
     </Card>

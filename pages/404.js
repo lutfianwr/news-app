@@ -1,11 +1,13 @@
+import { Container } from "@mui/system";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import myPic from "../assets/404.svg";
 import Layout from "../components/Layout";
 
 const error = () => {
   return (
-    <Layout>
+    <Container sx={{ textAlign: "center" }}>
       <div className="content">
         <a href="https://storyset.com/web">
           <Image
@@ -17,7 +19,8 @@ const error = () => {
           />
         </a>
       </div>
-    </Layout>
+      <Link href="/">Go back home</Link>
+    </Container>
   );
 };
 
