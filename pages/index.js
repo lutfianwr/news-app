@@ -1,4 +1,4 @@
-import Card from "../components/Card";
+import HeadCard from "../components/Card";
 import CardSmall from "../components/CardSmall";
 import Loading from "../components/Loading";
 import Chip from "@mui/material/Chip";
@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Skeleton, Box, Card } from "@mui/material";
 
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -101,7 +102,7 @@ export default function Home() {
     } else {
       localStorage.setItem("bookmark", JSON.stringify([item]));
     }
-    setTimeout(() => setLoading(false), 100);
+    setTimeout(() => setLoading(false), 500);
   };
 
   const handleRemove = (item) => {
@@ -109,7 +110,7 @@ export default function Home() {
     const tempData = JSON.parse(temp);
     const tempFilter = tempData.filter((data) => data.hashId !== item.hashId);
     localStorage.setItem("bookmark", JSON.stringify(tempFilter));
-    setTimeout(() => setLoading(false), 100);
+    setTimeout(() => setLoading(false), 500);
   };
 
   return (
@@ -140,8 +141,8 @@ export default function Home() {
         })}
       </Swiper>
 
-      <Container className="news">
-        {!loading && category === "all" && (
+      <Container className="news" sx={{ marginBottom: 7 }}>
+        {category === "all" && (
           <div className="top-news">
             <Typography
               variant="h7"
@@ -162,7 +163,7 @@ export default function Home() {
                 return (
                   <SwiperSlide key={article.url}>
                     <div className="card">
-                      <Card
+                      <HeadCard
                         title={article.title}
                         imageUrl={article.imageUrl}
                         url={article.sourceUrl}
@@ -174,6 +175,7 @@ export default function Home() {
                         id={article.hashId}
                         onClickBookmark={() => handleBookmark(article)}
                         isBookmark={() => isBookmark(article)}
+                        isLoading={loading}
                       />
                     </div>
                   </SwiperSlide>
@@ -183,8 +185,8 @@ export default function Home() {
           </div>
         )}
 
-        {!loading && (
-          <div id="trending">
+        {
+          <div>
             <Typography
               variant="h7"
               noWrap
@@ -213,14 +215,13 @@ export default function Home() {
                     id={article.hashId}
                     onClickBookmark={() => handleBookmark(article)}
                     isBookmark={() => isBookmark(article)}
+                    isLoading={loading}
                   />
                 </div>
               );
             })}
           </div>
-        )}
-
-        {loading && <Loading />}
+        }
       </Container>
     </Layout>
   );
