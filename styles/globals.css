@@ -39,9 +39,7 @@ a {
 .news .card {
   margin-bottom: 2vh;
 }
-.MuiCard-root {
-  box-shadow: none;
-}
+
 .loading {
   height: 70vh;
   display: flex;
@@ -52,8 +50,8 @@ a {
   font-family: "Poppins" !important;
 }
 .MuiTypography-h6 {
-  font-size: 0.85rem;
-  font-weight: bold;
+  font-size: 0.85rem !important;
+  font-weight: bold !important;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -65,7 +63,7 @@ a {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-size: 0.7rem;
+  font-size: 0.7rem !important;
 }
 .MuiTypography-subtitle2 {
   font-size: 0.8rem;

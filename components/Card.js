@@ -35,7 +35,7 @@ export default function ActionAreaCard({
   };
 
   return (
-    <Card>
+    <Card sx={{ boxShadow: "none" }}>
       <CardActionArea>
         {isLoading ? (
           <Skeleton variant="rectangular" height={140} />

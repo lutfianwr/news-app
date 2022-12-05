@@ -46,7 +46,7 @@ export default function MediaControlCard({
   };
 
   return (
-    <Card sx={{ display: "flex" }}>
+    <Card sx={{ display: "flex", boxShadow: "none" }}>
       {isLoading ? (
         <Skeleton variant="rectangular" height={100} width={100} />
       ) : (
